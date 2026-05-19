@@ -1,0 +1,73 @@
+.footer {
+  background: var(--bg-invert);
+  border-top: 1px solid var(--border-dark);
+  padding-top: 3rem;
+}
+
+.footer__inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-bottom: 3rem;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.footer__logo {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.footer__brand-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-on-dark);
+}
+
+.footer__brand-sub {
+  font-size: 0.75rem;
+  color: var(--text-on-dark-2);
+  margin-top: 0.15rem;
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  color: var(--text-on-dark-2);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer__contact-item svg { color: var(--accent); flex-shrink: 0; }
+.footer__contact-item:hover { color: var(--text-on-dark); }
+
+.footer__bottom {
+  border-top: 1px solid var(--border-dark);
+  padding: 1.25rem 0;
+}
+
+.footer__bottom p {
+  font-size: 0.72rem;
+  color: var(--text-on-dark-2);
+  text-align: center;
+}
