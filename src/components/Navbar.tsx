@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { House, Buildings, WhatsappLogo, List, X } from '@phosphor-icons/react';
+import { Buildings, WhatsappLogo, List, X } from '@phosphor-icons/react';
 import './Navbar.css';
 
 export default function Navbar() {
