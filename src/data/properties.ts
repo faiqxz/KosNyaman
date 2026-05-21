@@ -42,7 +42,7 @@ export const properties: Property[] = [
     shortDescription:
       'Kost siap huni dengan AC, WiFi, kamar mandi dalam, dan fasilitas lengkap. Cocok untuk mahasiswa dan karyawan.',
     description:
-      'Kost campur putra-putri dengan fasilitas lengkap, suasana tenang, dan area yang nyaman untuk tinggal harian.\n\nTersedia kamar ber-AC dengan kamar mandi pribadi di dalam, dilengkapi kasur, meja, dan lemari. Lingkungan aman dengan keamanan malam dan akses parkiran luas.\n\nLokasi sangat strategis — dekat Universitas Sriwijaya, RS Muhammadiyah, pusat kota Palembang, dan Bandara SMB II.',
+      'Kost dengan fasilitas lengkap, suasana tenang, dan area yang nyaman untuk tinggal harian.\n\nTersedia kamar ber-AC dengan kamar mandi pribadi di dalam, dilengkapi kasur, meja, dan lemari. Lingkungan aman dengan keamanan malam dan akses parkiran luas.\n\nLokasi sangat strategis — dekat Universitas Sriwijaya, RS Permata Palembang, pusat kota Palembang, dan Bandara SMB II.',
     heroImage: '/images/kos-nyaman/7.jpeg',
     gallery: [
       '/images/kos-nyaman/1.jpeg',
