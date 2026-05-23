@@ -115,6 +115,7 @@
   position: relative;
   z-index: 4;
   display: flex;
+  justify-content: center;
   gap: 0.875rem;
   flex-wrap: wrap;
   margin-top: 2.5rem;
