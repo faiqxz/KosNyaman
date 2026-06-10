@@ -1,4 +1,5 @@
-import { Buildings, Phone, MapPin, WhatsappLogo } from '@phosphor-icons/react';
+import { Phone, MapPin, WhatsappLogo } from '@phosphor-icons/react';
+import Logo from '../assets/Kos Nyaman Logo.svg';
 import './Footer.css';
 
 export default function Footer() {
@@ -6,8 +7,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <div className="footer__logo">
-            <Buildings size={20} weight="fill" />
+          <div className="footer__logo" style={{ background: 'transparent' }}>
+            <img src={Logo} alt="Kos Nyaman Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div>
             <p className="footer__brand-name">Kos Nyaman Bukit Baru</p>

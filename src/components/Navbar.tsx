@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Buildings, WhatsappLogo, List, X } from '@phosphor-icons/react';
+import { WhatsappLogo, List, X } from '@phosphor-icons/react';
+import Logo from '../assets/Kos Nyaman Logo.svg';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -29,8 +30,8 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${!isHero ? 'navbar--light' : ''}`}>
         <div className="navbar__pill container">
           <Link to="/" className="navbar__brand">
-            <div className="navbar__logo-box">
-              <Buildings size={17} weight="fill" />
+            <div className="navbar__logo-box" style={{ background: 'transparent' }}>
+              <img src={Logo} alt="Kos Nyaman Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <div className="navbar__brand-text">
               <span className="navbar__brand-name">Kos Nyaman</span>
