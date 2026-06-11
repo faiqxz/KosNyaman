@@ -84,17 +84,45 @@
 .detail-hero__meta-item svg { color: var(--accent); }
 
 .detail-hero__price {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--accent-light);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.015em;
 }
-.detail-hero__price span {
+.detail-hero__price-old {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: rgba(240,236,228,0.45);
+  text-decoration: line-through;
+  text-decoration-color: rgba(220,100,80,0.7);
+}
+.detail-hero__price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+.detail-hero__price-main > span:first-child {
   font-size: 0.78rem;
   font-weight: 400;
   color: rgba(240,236,228,0.55);
-  margin-left: 0.25rem;
+  margin-left: 0.1rem;
+}
+.detail-hero__discount-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 999px;
+  padding: 0.12rem 0.55rem;
+  box-shadow: 0 2px 10px rgba(34, 197, 94, 0.40);
+  animation: pulse-badge 2.4s ease-in-out infinite;
 }
 
 /* ── GALLERY ── */
@@ -228,6 +256,77 @@
   margin-top: 0.25rem;
 }
 
+.detail-spec-item {
+  transition:
+    transform    0.25s var(--ease-spring),
+    border-color 0.25s ease,
+    box-shadow   0.25s ease;
+}
+.detail-spec-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-card);
+}
+
+/* Availability indicator */
+.detail-avail {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.875rem 1.25rem;
+  background: rgba(45, 138, 78, 0.06);
+  border: 1px solid rgba(45, 138, 78, 0.15);
+  border-radius: var(--r-sm);
+}
+
+.detail-avail__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2d8a4e;
+  flex-shrink: 0;
+  animation: detail-avail-pulse 2s ease-in-out infinite;
+}
+
+@keyframes detail-avail-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 138, 78, 0.50); }
+  50%       { box-shadow: 0 0 0 6px rgba(45, 138, 78, 0); }
+}
+
+.detail-avail__text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2d8a4e;
+}
+
+/* Inline CTA card */
+.detail-inline-cta {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.detail-inline-cta__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.detail-inline-cta__desc {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.detail-inline-cta__btn {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
 /* Facilities */
 .detail-fac {
   display: flex;
@@ -316,16 +415,28 @@
 }
 
 .sticky-cta__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  flex-wrap: wrap;
   font-size: 1rem;
   font-weight: 800;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
+.sticky-cta__price-old {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  text-decoration: line-through;
+  text-decoration-color: rgba(200, 80, 80, 0.7);
+  align-self: center;
+}
 .sticky-cta__price span {
   font-size: 0.7rem;
   font-weight: 400;
   color: var(--text-tertiary);
-  margin-left: 0.2rem;
+  margin-left: 0.1rem;
 }
 
 .sticky-cta__actions {

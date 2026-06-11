@@ -16,6 +16,7 @@ export interface Property {
   location: string;
   price: number;
   priceLabel: string;
+  originalPriceLabel?: string;
   pricePeriod: string;
   shortDescription: string;
   description: string;
@@ -36,8 +37,9 @@ export const properties: Property[] = [
     name: 'Kost Nyaman 2 Tipe A',
     tagline: 'Kamar AC, WiFi, dan Kamar Mandi Dalam di Bukit Baru',
     location: 'Jln Bukit Baru, Lorong Bukit Jaya, No Ujung, Palembang',
-    price: 1_400_000,
-    priceLabel: 'Rp1.400.000',
+    price: 1_300_000,
+    priceLabel: 'Rp1.300.000',
+    originalPriceLabel: 'Rp1.400.000',
     pricePeriod: '/bulan',
     shortDescription:
       'Kost siap huni dengan AC, WiFi, kamar mandi dalam, dan fasilitas lengkap. Cocok untuk mahasiswa dan karyawan.',
@@ -85,8 +87,9 @@ export const properties: Property[] = [
     name: 'Kontrakan Macan Putih',
     tagline: 'Rumah Luas 5 Kamar di Tengah Kota Palembang',
     location: 'Jl. Parameswara Lr. Macan Putih No. 88, Palembang',
-    price: 38_000_000,
-    priceLabel: 'Rp38.000.000',
+    price: 37_000_000,
+    priceLabel: 'Rp37.000.000',
+    originalPriceLabel: 'Rp38.000.000',
     pricePeriod: '/tahun',
     shortDescription:
       'Rumah kontrakan luas 5 kamar tidur, 3 kamar mandi, garasi 2 mobil, PDAM 24 jam, dan lokasi strategis.',

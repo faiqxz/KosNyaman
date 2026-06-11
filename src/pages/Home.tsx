@@ -14,6 +14,7 @@ import {
 import { useReveal } from '../hooks/useReveal';
 import PropertyCard from '../components/PropertyCard';
 import InteractiveMap from '../components/InteractiveMap';
+import FaqAccordion from '../components/FaqAccordion';
 import { properties } from '../data/properties';
 import './Home.css';
 
@@ -162,6 +163,10 @@ export default function Home() {
                 <CheckCircle size={13} weight="fill" /> {t}
               </li>
             ))}
+            <li className="hero__trust-item hero__trust-item--available">
+              <span className="hero__avail-dot" />
+              Kamar masih tersedia
+            </li>
           </ul>
         </div>
 
@@ -169,7 +174,7 @@ export default function Home() {
         <div ref={statsRef} className="hero__stats container">
           {[
             { val: '2', label: 'Properti Tersedia' },
-            { val: 'Rp1,4 Jt', label: 'Mulai dari /bulan' },
+            { val: 'Rp1,3 Jt', label: 'Mulai dari /bulan' },
             { val: '24/7', label: 'Keamanan & Akses' },
           ].map((s) => (
             <div key={s.label} className="hero__stat glass-dark">
@@ -184,19 +189,6 @@ export default function Home() {
           <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <polygon points="0,60 1440,0 1440,60" fill="var(--bg-base)" />
           </svg>
-        </div>
-      </section>
-
-      {/* ── KINETIC MARQUEE ────────────────────────────────────────────────── */}
-      <section className="marquee-section" aria-hidden="true">
-        <div className="marquee-wrapper">
-          <div className="marquee-track">
-            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-              <span key={i} className="marquee-item">
-                <Star size={11} weight="fill" /> {item}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -252,6 +244,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── KINETIC MARQUEE ────────────────────────────────────────────────── */}
+      <section className="marquee-section" aria-hidden="true">
+        <div className="marquee-wrapper">
+          <div className="marquee-track">
+            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+              <span key={i} className="marquee-item">
+                <Star size={11} weight="fill" /> {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── PROPERTIES ──────────────────────────────────────────────────────── */}
       <section className="props-section section-pad" id="properti">
         <div className="divider-up">
@@ -286,6 +291,61 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── TESTIMONIALS ─────────────────────────────────────────────────── */}
+      <section className="testimonials-section section-pad" id="testimonials">
+        <div className="container">
+          <div className="testimonials-section__header reveal">
+            <span className="eyebrow">Kata Penghuni</span>
+            <h2 className="section-headline">
+              Cerita dari Mereka<br />yang Sudah Tinggal
+            </h2>
+          </div>
+
+          <div className="testimonials-grid">
+            {[
+              {
+                stars: 5,
+                quote: 'Kamarnya bersih, AC dingin, WiFi kencang. Sangat cocok untuk mahasiswa yang butuh tempat tinggal nyaman.',
+                name: 'Rina',
+                role: 'Mahasiswa UNSRI',
+              },
+              {
+                stars: 5,
+                quote: 'Lokasinya strategis, dekat kampus dan pasar. Pemiliknya ramah dan responsif kalau ada kendala.',
+                name: 'Andi',
+                role: 'Karyawan Swasta',
+              },
+              {
+                stars: 5,
+                quote: 'Sudah 2 tahun tinggal di sini. Lingkungannya aman dan tenang, parkiran luas.',
+                name: 'Budi',
+                role: 'Mahasiswa Polsri',
+              },
+            ].map((t, i) => (
+              <div
+                key={t.name}
+                className={`testimonial-card reveal reveal-delay-${i + 1}`}
+              >
+                <div className="testimonial-card__stars">
+                  {Array.from({ length: t.stars }).map((_, j) => (
+                    <Star key={j} size={14} weight="fill" />
+                  ))}
+                </div>
+                <p className="testimonial-card__quote">"{t.quote}"</p>
+                <div className="testimonial-card__reviewer">
+                  <p className="testimonial-card__name">{t.name}</p>
+                  <p className="testimonial-card__role">{t.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="testimonials-section__summary reveal reveal-delay-4">
+            Rata-rata Rating <Star size={13} weight="fill" /> <strong>4.8 / 5.0</strong>
+          </p>
+        </div>
+      </section>
+
       {/* ── LOCATION MAP ────────────────────────────────────────────────────── */}
       <section className="map-section section-pad" id="lokasi">
         <div className="container map-section__inner">
@@ -304,6 +364,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ ─────────────────────────────────────────────────────────────── */}
+      <FaqAccordion />
 
       {/* ── BOOKING CTA ─────────────────────────────────────────────────────── */}
       <section className="cta-section" id="booking">

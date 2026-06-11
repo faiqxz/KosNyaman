@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, ArrowRight, WifiHigh, Wind, Bathtub, Bed } from '@phosphor-icons/react';
+import { MapPin, ArrowRight, WifiHigh, Wind, Bathtub, Bed, Fire } from '@phosphor-icons/react';
 import { type Property } from '../data/properties';
 import './PropertyCard.css';
 
@@ -25,6 +25,14 @@ export default function PropertyCard({ property, index = 0 }: PropertyCardProps)
 
   return (
     <article className={`prop-card reveal ${delayClass}`}>
+      {/* Populer indicator for high-demand properties */}
+      {property.type === 'kost' && (
+        <div className="prop-card__popular">
+          <Fire size={12} weight="fill" />
+          <span>Populer</span>
+        </div>
+      )}
+
       {/* Outer bezel (double-bezel pattern) */}
       <div className="prop-card__shell">
         {/* Inner image with zoom */}
@@ -70,8 +78,25 @@ export default function PropertyCard({ property, index = 0 }: PropertyCardProps)
 
         <div className="prop-card__footer">
           <div className="prop-card__price">
-            <span className="prop-card__price-val">{property.priceLabel}</span>
-            <span className="prop-card__price-per">{property.pricePeriod}</span>
+            <div className="prop-card__price-stack">
+              {property.originalPriceLabel && (
+                <span className="prop-card__price-old">{property.originalPriceLabel}</span>
+              )}
+              <div className="prop-card__price-row">
+                <span className="prop-card__price-val">{property.priceLabel}</span>
+                <span className="prop-card__price-per">{property.pricePeriod}</span>
+                {property.originalPriceLabel && (() => {
+                  // Parse original price to calculate savings
+                  const origNum = parseInt(property.originalPriceLabel!.replace(/[^0-9]/g, ''), 10);
+                  const curNum  = property.price;
+                  const saved   = origNum - curNum;
+                  const savedLabel = saved >= 1_000_000
+                    ? `Hemat Rp${(saved / 1_000_000).toFixed(1).replace('.0', '')} Jt`
+                    : `Hemat Rp${(saved / 1_000).toFixed(0)} rb`;
+                  return <span className="prop-card__discount-badge">{savedLabel}</span>;
+                })()}
+              </div>
+            </div>
           </div>
           <Link to={`/properti/${property.id}`} className="prop-card__cta btn btn-primary">
             Lihat Detail <ArrowRight size={14} weight="bold" />

@@ -152,8 +152,16 @@ export default function PropertyDetail() {
                 <MapPin size={14} weight="fill" /> {property.location}
               </span>
               <span className="detail-hero__price">
-                {property.priceLabel}
-                <span>{property.pricePeriod}</span>
+                {property.originalPriceLabel && (
+                  <span className="detail-hero__price-old">{property.originalPriceLabel}</span>
+                )}
+                <span className="detail-hero__price-main">
+                  {property.priceLabel}
+                  <span>{property.pricePeriod}</span>
+                  {property.originalPriceLabel && (
+                    <span className="detail-hero__discount-badge">Diskon</span>
+                  )}
+                </span>
               </span>
             </div>
           </div>
@@ -241,6 +249,29 @@ export default function PropertyDetail() {
                   </ul>
                 </div>
               )}
+
+              {/* Availability indicator */}
+              <div className="detail-avail">
+                <span className="detail-avail__dot" />
+                <span className="detail-avail__text">
+                  {property.status === 'available' ? 'Tersedia — bisa langsung booking' : 'Hampir penuh — segera booking'}
+                </span>
+              </div>
+
+              {/* Inline CTA card */}
+              <div className="detail-inline-cta">
+                <p className="detail-inline-cta__title">Tertarik?</p>
+                <p className="detail-inline-cta__desc">Booking sekarang via WhatsApp langsung ke pemilik. Tanpa perantara.</p>
+                <a
+                  href={waLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary detail-inline-cta__btn"
+                >
+                  <WhatsappLogo size={16} weight="fill" />
+                  Booking via WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -268,6 +299,9 @@ export default function PropertyDetail() {
           <div className="sticky-cta__info">
             <p className="sticky-cta__name">{property.name}</p>
             <p className="sticky-cta__price">
+              {property.originalPriceLabel && (
+                <span className="sticky-cta__price-old">{property.originalPriceLabel}</span>
+              )}
               {property.priceLabel}
               <span>{property.pricePeriod}</span>
             </p>
