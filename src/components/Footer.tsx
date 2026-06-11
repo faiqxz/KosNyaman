@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, WhatsappLogo, ArrowRight, Envelope } from '@phosphor-icons/react';
+import { MapPin, WhatsappLogo, ArrowRight, Envelope } from '@phosphor-icons/react';
 import { properties } from '../data/properties';
 import Logo from '../assets/Kos Nyaman Logo.svg';
 import './Footer.css';
