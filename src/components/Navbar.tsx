@@ -29,31 +29,33 @@ export default function Navbar() {
     <>
       <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${!isHero ? 'navbar--light' : ''}`}>
         <div className="navbar__pill container">
-          <Link to="/" className="navbar__brand">
-            <div className="navbar__logo-box" style={{ background: 'transparent' }}>
-              <img src={Logo} alt="Kos Nyaman Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-            </div>
-            <div className="navbar__brand-text">
-              <span className="navbar__brand-name">Kos Nyaman</span>
-              <span className="navbar__brand-sub">Bukit Baru</span>
-            </div>
-          </Link>
-
+          {/* Left: nav links */}
           <div className="navbar__links">
             <Link to="/" className="navbar__link">Beranda</Link>
             <Link to="/properti/kos-nyaman-bukit-baru" className="navbar__link">Kost</Link>
             <Link to="/properti/kontrakan-macan-putih" className="navbar__link">Kontrakan</Link>
           </div>
 
-          <a
-            href="https://wa.me/6287899677415?text=Halo%2C+saya+ingin+bertanya+tentang+properti+yang+tersedia."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="navbar__cta btn btn-primary"
-          >
-            <WhatsappLogo size={16} weight="fill" />
-            Hubungi
-          </a>
+          {/* Center: logo */}
+          <Link to="/" className="navbar__brand">
+            <div className="navbar__logo-box">
+              <img src={Logo} alt="Kos Nyaman Logo" />
+            </div>
+            <span className="navbar__brand-name">Kos Nyaman</span>
+          </Link>
+
+          {/* Right: CTA */}
+          <div className="navbar__right">
+            <a
+              href="https://wa.me/6287899677415?text=Halo%2C+saya+ingin+bertanya+tentang+properti+yang+tersedia."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="navbar__cta btn btn-primary"
+            >
+              <WhatsappLogo size={16} weight="fill" />
+              Hubungi
+            </a>
+          </div>
 
           <button
             className="navbar__hamburger"

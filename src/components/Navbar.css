@@ -6,7 +6,7 @@
   left: 0;
   right: 0;
   z-index: 80;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
   transition:
     padding           0.35s var(--ease-spring),
     background        0.35s ease,
@@ -16,7 +16,7 @@
 
 /* Scrolled state – frosted glass */
 .navbar--scrolled {
-  padding: 0.6rem 0;
+  padding: 0.5rem 0;
   background: rgba(253, 251, 247, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -34,66 +34,63 @@
 .navbar__pill {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: space-between;
+  position: relative;
 }
 
-/* ── BRAND ── */
+/* ── BRAND (centered absolutely) ── */
 .navbar__brand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.5rem;
   text-decoration: none;
-  flex-shrink: 0;
+  z-index: 2;
 }
 
 .navbar__logo-box {
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
-.navbar__brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.15;
+.navbar__logo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .navbar__brand-name {
-  font-size: 0.88rem;
-  font-weight: 700;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-
-.navbar__brand-sub {
-  font-size: 0.68rem;
-  font-weight: 400;
-  color: var(--text-tertiary);
+  letter-spacing: -0.02em;
 }
 
 /* On dark hero – invert brand text */
 .navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__brand-name { color: var(--text-on-dark); }
-.navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__brand-sub  { color: var(--text-on-dark-2); }
 
-/* ── LINKS ── */
+/* ── LINKS (left side) ── */
 .navbar__links {
   display: flex;
   align-items: center;
   gap: 0.125rem;
-  flex: 1;
-  justify-content: center;
 }
 
 .navbar__link {
-  font-size: 0.875rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  padding: 0.5rem 0.85rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 6px;
   color: var(--text-secondary);
   transition: color 0.2s ease, background 0.2s ease;
@@ -128,10 +125,16 @@
   background: rgba(255,255,255,0.07);
 }
 
+/* ── RIGHT SIDE ── */
+.navbar__right {
+  display: flex;
+  align-items: center;
+}
+
 /* ── CTA ── */
 .navbar__cta {
-  font-size: 0.82rem;
-  padding: 0.575rem 1.1rem;
+  font-size: 0.8rem;
+  padding: 0.55rem 1rem;
   flex-shrink: 0;
 }
 
@@ -228,10 +231,14 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .navbar__links { display: none; }
-  .navbar__cta   { display: none; }
+  .navbar__right { display: none; }
   .navbar__hamburger { display: flex; }
+  .navbar__brand {
+    position: static;
+    transform: none;
+  }
 }
 
 @media (max-width: 480px) {
-  .navbar__brand-sub { display: none; }
+  .navbar__brand-name { font-size: 1rem; }
 }

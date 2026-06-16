@@ -140,8 +140,8 @@ export default function PropertyDetail() {
               <ArrowLeft size={15} weight="bold" /> Kembali
             </Link>
 
-            <span className={`badge detail-hero__badge detail-hero__badge--${property.status === 'available' ? 'green' : 'amber'}`}>
-              {property.status === 'available' ? 'Tersedia' : 'Hampir Penuh'}
+            <span className={`badge detail-hero__badge detail-hero__badge--${property.status === 'available' ? 'green' : property.status === 'limited' ? 'amber' : 'red'}`}>
+              {property.status === 'available' ? 'Tersedia' : property.status === 'limited' ? 'Hampir Penuh' : 'Sudah Disewa'}
             </span>
 
             <h1 className="display-headline detail-hero__name">{property.name}</h1>
@@ -251,26 +251,42 @@ export default function PropertyDetail() {
               )}
 
               {/* Availability indicator */}
-              <div className="detail-avail">
+              <div className={`detail-avail detail-avail--${property.status}`}>
                 <span className="detail-avail__dot" />
                 <span className="detail-avail__text">
-                  {property.status === 'available' ? 'Tersedia — bisa langsung booking' : 'Hampir penuh — segera booking'}
+                  {property.status === 'available' 
+                    ? 'Tersedia — bisa langsung booking' 
+                    : property.status === 'limited' 
+                    ? 'Hampir penuh — segera booking' 
+                    : 'Sudah disewa — tidak tersedia'}
                 </span>
               </div>
 
               {/* Inline CTA card */}
               <div className="detail-inline-cta">
-                <p className="detail-inline-cta__title">Tertarik?</p>
-                <p className="detail-inline-cta__desc">Booking sekarang via WhatsApp langsung ke pemilik. Tanpa perantara.</p>
-                <a
-                  href={waLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary detail-inline-cta__btn"
-                >
-                  <WhatsappLogo size={16} weight="fill" />
-                  Booking via WhatsApp
-                </a>
+                <p className="detail-inline-cta__title">
+                  {property.status === 'rented' ? 'Sudah Disewa' : 'Tertarik?'}
+                </p>
+                <p className="detail-inline-cta__desc">
+                  {property.status === 'rented' 
+                    ? 'Properti ini sudah disewa untuk satu tahun. Hubungi kami untuk masuk daftar tunggu.' 
+                    : 'Booking sekarang via WhatsApp langsung ke pemilik. Tanpa perantara.'}
+                </p>
+                {property.status === 'rented' ? (
+                  <button className="btn btn-disabled detail-inline-cta__btn" disabled>
+                    Currently Rented — Available 16/06/2027
+                  </button>
+                ) : (
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary detail-inline-cta__btn"
+                  >
+                    <WhatsappLogo size={16} weight="fill" />
+                    Booking via WhatsApp
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -315,14 +331,20 @@ export default function PropertyDetail() {
             >
               <MapPin size={15} weight="fill" /> Lihat di Maps
             </a>
-            <a
-              href={waLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary sticky-cta__wa-btn"
-            >
-              <WhatsappLogo size={16} weight="fill" /> Booking via WhatsApp
-            </a>
+            {property.status === 'rented' ? (
+              <button className="btn btn-disabled sticky-cta__wa-btn" disabled>
+                Currently Rented — Available 16/06/2027
+              </button>
+            ) : (
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary sticky-cta__wa-btn"
+              >
+                <WhatsappLogo size={16} weight="fill" /> Booking via WhatsApp
+              </a>
+            )}
           </div>
         </div>
       </div>

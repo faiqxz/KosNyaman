@@ -47,7 +47,7 @@ export default function PropertyCard({ property, index = 0 }: PropertyCardProps)
           />
           <div className="prop-card__img-overlay" />
           {property.badge && (
-            <span className="badge prop-card__badge">{property.badge}</span>
+            <span className={`badge prop-card__badge ${property.status === 'rented' ? 'badge--red' : ''}`}>{property.badge}</span>
           )}
           <span className="prop-card__type-chip">
             {property.type === 'kost' ? 'Kost' : 'Kontrakan'}

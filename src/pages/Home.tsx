@@ -125,63 +125,83 @@ export default function Home() {
           <div className="hero__bg-vignette" />
         </div>
 
-        {/* Content */}
-        <div ref={heroTextRef} className="container hero__content">
-          {/* Eyebrow */}
-          <div className="hero__eyebrow-row">
-            <span className="eyebrow hero__eyebrow">
-              <MapPin size={11} weight="fill" /> Bukit Baru, Palembang
+        {/* 4-quadrant grid overlay */}
+        <div ref={heroTextRef} className="hero__grid container">
+          {/* ── TOP LEFT: Caption / eyebrow ── */}
+          <div className="hero__top-left">
+            <span className="hero__caption">
+              // Kos & Kontrakan di Palembang
+            </span>
+            <span className="hero__caption-sub">
+              Booking langsung · tanpa perantara · fasilitas lengkap
             </span>
           </div>
 
-          {/* Headline – Lora serif, 2-3 lines max, wide container */}
-          <h1 className="hero__headline display-headline">
-            Hunian Nyaman<br />
-            <em className="hero__headline-em">di Bukit Baru</em>
-          </h1>
-
-          <p className="hero__sub body-lg">
-            Kost harian siap huni dan rumah kontrakan luas — fasilitas lengkap,
-            lokasi strategis, booking langsung ke pemilik tanpa perantara.
-          </p>
-
-          {/* CTAs */}
-          <div className="hero__actions">
-            <a href="#properti" className="btn btn-primary hero__btn-main">
-              Lihat Properti
-              <span className="hero__btn-icon"><ArrowRight size={15} weight="bold" /></span>
-            </a>
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
-              <WhatsappLogo size={16} weight="fill" /> Booking Sekarang
-            </a>
+          {/* ── TOP RIGHT: System label ── */}
+          <div className="hero__top-right">
+            <span className="hero__caption">
+              Properti Pilihan
+            </span>
+            <span className="hero__caption-sub">
+              Lokasi: Bukit Baru, Palembang
+            </span>
           </div>
 
-          {/* Trust signals */}
-          <ul className="hero__trust">
-            {['Tanpa perantara', 'Fasilitas AC & WiFi', 'Bebas banjir'].map((t) => (
-              <li key={t} className="hero__trust-item">
-                <CheckCircle size={13} weight="fill" /> {t}
+          {/* ── BOTTOM LEFT: Massive headline ── */}
+          <div className="hero__bottom-left">
+            <h1 className="hero__headline display-headline">
+              Hunian Nyaman<br />
+              di Bukit Baru.
+            </h1>
+          </div>
+
+          {/* ── BOTTOM RIGHT: Description + CTA + Trust ── */}
+          <div className="hero__bottom-right">
+            <p className="hero__sub">
+              Kost harian siap huni dan rumah kontrakan luas — fasilitas lengkap,
+              lokasi strategis, booking langsung ke pemilik tanpa perantara.
+            </p>
+
+            {/* CTAs */}
+            <div className="hero__actions">
+              <a href="#properti" className="btn btn-primary hero__btn-main">
+                Lihat Properti
+                <span className="hero__btn-icon"><ArrowRight size={15} weight="bold" /></span>
+              </a>
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
+                <WhatsappLogo size={16} weight="fill" /> Booking Sekarang
+              </a>
+            </div>
+
+            {/* Trust signals */}
+            <ul className="hero__trust">
+              {['Tanpa perantara', 'Fasilitas AC & WiFi', 'Bebas banjir'].map((t) => (
+                <li key={t} className="hero__trust-item">
+                  <CheckCircle size={13} weight="fill" /> {t}
+                </li>
+              ))}
+              <li className="hero__trust-item hero__trust-item--available">
+                <span className="hero__avail-dot" />
+                Kamar masih tersedia
               </li>
-            ))}
-            <li className="hero__trust-item hero__trust-item--available">
-              <span className="hero__avail-dot" />
-              Kamar masih tersedia
-            </li>
-          </ul>
+            </ul>
+          </div>
         </div>
 
-        {/* Floating stat cards */}
-        <div ref={statsRef} className="hero__stats container">
-          {[
-            { val: '2', label: 'Properti Tersedia' },
-            { val: 'Rp1,3 Jt', label: 'Mulai dari /bulan' },
-            { val: '24/7', label: 'Keamanan & Akses' },
-          ].map((s) => (
-            <div key={s.label} className="hero__stat glass-dark">
-              <p className="hero__stat-val">{s.val}</p>
-              <p className="hero__stat-label">{s.label}</p>
-            </div>
-          ))}
+        {/* Bottom stats bar */}
+        <div ref={statsRef} className="hero__stats-bar">
+          <div className="hero__stats-bar-inner container">
+            {[
+              { val: properties.filter(p => p.status !== 'rented').length.toString(), label: 'Properti Tersedia' },
+              { val: 'Rp1,3 Jt', label: 'Mulai dari /bulan' },
+              { val: '24/7', label: 'Keamanan & Akses' },
+            ].map((s) => (
+              <div key={s.label} className="hero__stat">
+                <p className="hero__stat-val">{s.val}</p>
+                <p className="hero__stat-label">{s.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Angled divider to cream section */}

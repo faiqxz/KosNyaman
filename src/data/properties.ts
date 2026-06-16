@@ -24,7 +24,7 @@ export interface Property {
   gallery: string[];
   facilities: Facility[];
   specs?: Spec[];
-  status: 'available' | 'limited';
+  status: 'available' | 'limited' | 'rented';
   mapsUrl: string;
   coords: [number, number];
   badge?: string;
@@ -131,9 +131,9 @@ export const properties: Property[] = [
       { label: 'Kamar Tidur', value: '5 Kamar' },
       { label: 'Kamar Mandi', value: '3 Kamar' },
     ],
-    status: 'available',
+    status: 'rented',
     mapsUrl: 'https://share.google/yiFTIDSfcfwLxVrNU',
     coords: [-2.9641, 104.7456],
-    badge: 'Tersedia',
+    badge: 'Sudah Disewa',
   },
 ];

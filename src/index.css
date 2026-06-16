@@ -212,6 +212,21 @@ ul, ol { list-style: none; }
   transform: translateY(-1px);
 }
 
+/* Disabled */
+.btn-disabled, .btn:disabled {
+  background: #e5e1da !important;
+  color: #9c9389 !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.btn-disabled:hover, .btn:disabled:hover {
+  background: #e5e1da !important;
+  color: #9c9389 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 /* ── BADGE ──────────────────────────────────────────────────────────────────── */
 .badge {
   display: inline-block;
@@ -223,6 +238,9 @@ ul, ol { list-style: none; }
   border-radius: 999px;
   background: var(--accent);
   color: #fff;
+}
+.badge--red {
+  background: #dc2626;
 }
 
 /* ── GLASS CARDS ────────────────────────────────────────────────────────────── */
