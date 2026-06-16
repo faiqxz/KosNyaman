@@ -625,6 +625,18 @@
   .cta-section__links { max-width: 100%; }
 
   .testimonials-grid { grid-template-columns: 1fr; }
+
+  /* Performance: disable expensive blur orbs on mobile */
+  .hero::before,
+  .hero::after { display: none; }
+  .why-section::before { display: none; }
+  .props-section::after { display: none; }
+
+  /* Reduce backdrop-filter intensity on mobile */
+  .hero__stats-bar {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 @media (max-width: 480px) {

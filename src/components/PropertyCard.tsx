@@ -42,6 +42,7 @@ export default function PropertyCard({ property, index = 0 }: PropertyCardProps)
             alt={property.name}
             className="prop-card__img"
             loading="lazy"
+            decoding="async"
             width="800"
             height="500"
           />

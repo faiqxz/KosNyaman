@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, WhatsappLogo, ArrowRight, Envelope } from '@phosphor-icons/react';
 import { properties } from '../data/properties';
-import Logo from '../assets/Kos Nyaman Logo.svg';
+import Logo from '../assets/logo.webp';
 import './Footer.css';
 
 export default function Footer() {

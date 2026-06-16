@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,8 +13,9 @@ import {
 } from '@phosphor-icons/react';
 import { useReveal } from '../hooks/useReveal';
 import PropertyCard from '../components/PropertyCard';
-import InteractiveMap from '../components/InteractiveMap';
-import FaqAccordion from '../components/FaqAccordion';
+
+const InteractiveMap = lazy(() => import('../components/InteractiveMap'));
+const FaqAccordion = lazy(() => import('../components/FaqAccordion'));
 import { properties } from '../data/properties';
 import './Home.css';
 
@@ -117,10 +118,13 @@ export default function Home() {
         {/* Parallax background image */}
         <div ref={heroBgRef} className="hero__bg">
           <img
-            src="/images/kos-nyaman/7.jpeg"
+            src="/images/kos-nyaman/7.webp"
             alt="Kos Nyaman Bukit Baru — tampak luar"
             className="hero__bg-img"
             fetchPriority="high"
+            width={1200}
+            height={800}
+            decoding="async"
           />
           <div className="hero__bg-vignette" />
         </div>
@@ -132,18 +136,12 @@ export default function Home() {
             <span className="hero__caption">
               // Kos & Kontrakan di Palembang
             </span>
-            <span className="hero__caption-sub">
-              Booking langsung · tanpa perantara · fasilitas lengkap
-            </span>
           </div>
 
           {/* ── TOP RIGHT: System label ── */}
           <div className="hero__top-right">
             <span className="hero__caption">
               Properti Pilihan
-            </span>
-            <span className="hero__caption-sub">
-              Lokasi: Bukit Baru, Palembang
             </span>
           </div>
 
@@ -202,13 +200,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Angled divider to cream section */}
-        <div className="divider-down">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="0,60 1440,0 1440,60" fill="var(--bg-base)" />
-          </svg>
         </div>
       </section>
 
@@ -279,12 +270,6 @@ export default function Home() {
 
       {/* ── PROPERTIES ──────────────────────────────────────────────────────── */}
       <section className="props-section section-pad" id="properti">
-        <div className="divider-up">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-            <polygon points="0,60 1440,0 1440,60" fill="var(--bg-surface)" />
-          </svg>
-        </div>
-
         <div className="container">
           <div className="props-section__header reveal">
             <span className="eyebrow">Pilihan Properti</span>
@@ -302,12 +287,6 @@ export default function Home() {
               <PropertyCard key={prop.id} property={prop} index={i} />
             ))}
           </div>
-        </div>
-
-        <div className="divider-down">
-          <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
-            <polygon points="0,0 1440,60 1440,60 0,60" fill="var(--bg-base)" />
-          </svg>
         </div>
       </section>
 
@@ -380,22 +359,29 @@ export default function Home() {
           </div>
 
           <div className="reveal reveal-delay-2">
-            <InteractiveMap />
+            <Suspense fallback={<div className="map-placeholder" style={{ height: '450px', background: 'var(--bg-surface)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>Memuat peta...</div>}>
+              <InteractiveMap />
+            </Suspense>
           </div>
         </div>
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────────────────────── */}
-      <FaqAccordion />
+      <Suspense fallback={null}>
+        <FaqAccordion />
+      </Suspense>
 
       {/* ── BOOKING CTA ─────────────────────────────────────────────────────── */}
       <section className="cta-section" id="booking">
         <div className="cta-section__bg">
           <img
-            src="/images/macan-putih/12.jpg"
+            src="/images/macan-putih/12.webp"
             alt="Kontrakan Macan Putih"
             className="cta-section__bg-img"
             loading="lazy"
+            decoding="async"
+            width={800}
+            height={600}
           />
           <div className="cta-section__bg-overlay" />
         </div>

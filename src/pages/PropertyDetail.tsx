@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,7 +21,8 @@ import {
   Lightning,
 } from '@phosphor-icons/react';
 import { properties } from '../data/properties';
-import InteractiveMap from '../components/InteractiveMap';
+
+const InteractiveMap = lazy(() => import('../components/InteractiveMap'));
 import { useReveal } from '../hooks/useReveal';
 import './PropertyDetail.css';
 
@@ -131,6 +132,9 @@ export default function PropertyDetail() {
               alt={property.name}
               className="detail-hero__img"
               fetchPriority="high"
+              width={1200}
+              height={800}
+              decoding="async"
             />
             <div className="detail-hero__vignette" />
           </div>
@@ -184,7 +188,7 @@ export default function PropertyDetail() {
                   onClick={() => setLightbox(i)}
                   aria-label={`Buka foto ${i + 1}`}
                 >
-                  <img src={img} alt={`${property.name} foto ${i + 1}`} loading="lazy" />
+                  <img src={img} alt={`${property.name} foto ${i + 1}`} loading="lazy" decoding="async" width={800} height={600} />
                   <div className="gallery-item__overlay">
                     <span>Perbesar</span>
                   </div>
@@ -300,7 +304,9 @@ export default function PropertyDetail() {
               Peta Lokasi
             </h2>
             <div className="reveal reveal-delay-2">
-              <InteractiveMap />
+              <Suspense fallback={<div className="map-placeholder" style={{ height: '450px', background: 'var(--bg-surface)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>Memuat peta...</div>}>
+                <InteractiveMap />
+              </Suspense>
             </div>
           </div>
         </section>

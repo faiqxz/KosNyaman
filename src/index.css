@@ -3,7 +3,6 @@
    Vibe:   Editorial Luxury (Real Estate)
    Fonts:  Outfit (sans-serif) + Lora (serif display)
    ───────────────────────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
 /* ── TOKENS ─────────────────────────────────────────────────────────────────── */
 :root {
@@ -271,6 +270,11 @@ ul, ol { list-style: none; }
   opacity: 0.032;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
+}
+
+/* Disable noise grain on mobile — feTurbulence causes expensive repaints */
+@media (max-width: 768px) {
+  .noise-layer { display: none; }
 }
 
 /* ── SECTION DIVIDERS ───────────────────────────────────────────────────────── */

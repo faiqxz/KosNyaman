@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { WhatsappLogo, List, X } from '@phosphor-icons/react';
-import Logo from '../assets/Kos Nyaman Logo.svg';
+import Logo from '../assets/logo.webp';
 import './Navbar.css';
 
 export default function Navbar() {
