@@ -29,7 +29,7 @@ export default function Footer() {
 
         {/* Column 2 – Quick Links */}
         <div className="footer__col">
-          <h4 className="footer__col-title">Properti Kami</h4>
+          <h3 className="footer__col-title">Properti Kami</h3>
           <ul className="footer__links">
             {properties.map((prop) => (
               <li key={prop.id}>
@@ -50,7 +50,7 @@ export default function Footer() {
 
         {/* Column 3 – Contact */}
         <div className="footer__col">
-          <h4 className="footer__col-title">Hubungi Kami</h4>
+          <h3 className="footer__col-title">Hubungi Kami</h3>
           <ul className="footer__links">
             <li>
               <a
