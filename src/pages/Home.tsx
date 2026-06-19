@@ -150,7 +150,7 @@ export default function Home() {
           {/* ── BOTTOM RIGHT: Description + CTA + Trust ── */}
           <div className="hero__bottom-right">
             <p className="hero__sub">
-              Kost harian siap huni dan rumah kontrakan luas — fasilitas lengkap,
+              Kost siap huni dengan suasana asri dan rumah kontrakan luas — fasilitas lengkap,
               lokasi strategis, booking langsung ke pemilik tanpa perantara.
             </p>
 
