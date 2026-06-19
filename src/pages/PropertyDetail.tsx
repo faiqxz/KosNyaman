@@ -273,12 +273,12 @@ export default function PropertyDetail() {
                 </p>
                 <p className="detail-inline-cta__desc">
                   {property.status === 'rented' 
-                    ? 'Properti ini sudah disewa untuk satu tahun. Hubungi kami untuk masuk daftar tunggu.' 
+                    ? 'Properti ini sudah penuh disewa. Hubungi kami untuk masuk daftar tunggu.' 
                     : 'Booking sekarang via WhatsApp langsung ke pemilik. Tanpa perantara.'}
                 </p>
                 {property.status === 'rented' ? (
                   <button className="btn btn-disabled detail-inline-cta__btn" disabled>
-                    Currently Rented — Available 16/06/2027
+                    Sudah Disewa (Fully Booked)
                   </button>
                 ) : (
                   <a
@@ -339,7 +339,7 @@ export default function PropertyDetail() {
             </a>
             {property.status === 'rented' ? (
               <button className="btn btn-disabled sticky-cta__wa-btn" disabled>
-                Currently Rented — Available 16/06/2027
+                Sudah Disewa (Fully Booked)
               </button>
             ) : (
               <a

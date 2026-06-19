@@ -118,7 +118,7 @@ export default function Home() {
         {/* Parallax background image */}
         <div ref={heroBgRef} className="hero__bg">
           <img
-            src="/images/kos-nyaman/7.webp"
+            src="/images/kos-nyaman/8.webp"
             alt="Kos Nyaman Bukit Baru — tampak luar"
             className="hero__bg-img"
             fetchPriority="high"
@@ -133,16 +133,10 @@ export default function Home() {
         <div ref={heroTextRef} className="hero__grid container">
           {/* ── TOP LEFT: Caption / eyebrow ── */}
           <div className="hero__top-left">
-            <span className="hero__caption">
-              // Kos & Kontrakan di Palembang
-            </span>
           </div>
 
           {/* ── TOP RIGHT: System label ── */}
           <div className="hero__top-right">
-            <span className="hero__caption">
-              Properti Pilihan
-            </span>
           </div>
 
           {/* ── BOTTOM LEFT: Massive headline ── */}
