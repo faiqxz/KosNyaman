@@ -238,6 +238,9 @@ ul, ol { list-style: none; }
   background: var(--accent);
   color: #fff;
 }
+.badge--green {
+  background: #2d8a4e;
+}
 .badge--red {
   background: #dc2626;
 }
