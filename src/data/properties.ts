@@ -79,10 +79,10 @@ export const properties: Property[] = [
       { label: 'AC', value: 'Tiap Kamar' },
       { label: 'Tagihan', value: 'Bulanan' },
     ],
-    status: 'rented',
+    status: 'available',
     mapsUrl: 'https://maps.app.goo.gl/7WT1v7Fidvf7xHrb9',
     coords: [-2.9836, 104.7349],
-    badge: 'Sudah Disewa',
+    badge: 'Tersedia',
   },
   {
     id: 'kos-nyaman-tipe-b',
