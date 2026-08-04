@@ -37,9 +37,9 @@ export const properties: Property[] = [
     name: 'Kost Nyaman 2 Tipe A',
     tagline: 'Kamar AC, WiFi, dan Kamar Mandi Dalam di Bukit Baru',
     location: 'Jln Bukit Baru, Lorong Bukit Jaya, No Ujung, Palembang',
-    price: 1_300_000,
-    priceLabel: 'Rp1.300.000',
-    originalPriceLabel: 'Rp1.400.000',
+    price: 1_400_000,
+    priceLabel: 'Rp1.400.000',
+    originalPriceLabel: 'Rp1.500.000',
     pricePeriod: '/bulan',
     shortDescription:
       'Kost siap huni dengan AC, WiFi, kamar mandi dalam, dan fasilitas lengkap. Cocok untuk mahasiswa dan karyawan.',
