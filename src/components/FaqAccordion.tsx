@@ -1,34 +1,8 @@
 import { useState } from 'react';
 import { useReveal } from '../hooks/useReveal';
+import { FAQ_DATA } from '../data/faq';
+import { waLink } from '../data/site';
 import './FaqAccordion.css';
-
-interface FaqItem {
-  q: string;
-  a: string;
-}
-
-const FAQ_DATA: FaqItem[] = [
-  {
-    q: 'Apakah bisa survei lokasi terlebih dahulu?',
-    a: 'Tentu saja! Kami sangat menyarankan survei lokasi sebelum booking. Silakan hubungi kami via WhatsApp untuk menjadwalkan kunjungan di waktu yang nyaman bagi Anda.',
-  },
-  {
-    q: 'Bagaimana cara booking dan berapa uang mukanya?',
-    a: 'Booking dilakukan langsung ke pemilik via WhatsApp. Untuk kost, uang muka biasanya 1 bulan sewa pertama. Untuk kontrakan, pembayaran sesuai kesepakatan — bisa per tahun atau per semester.',
-  },
-  {
-    q: 'Apakah tersedia WiFi dan AC di setiap kamar?',
-    a: 'Ya, setiap kamar kost dilengkapi AC dan akses WiFi. Untuk kontrakan, 3 dari 5 kamar sudah ber-AC, dan ruang tamu juga ber-AC.',
-  },
-  {
-    q: 'Berapa jarak ke Universitas Sriwijaya?',
-    a: 'Baik Kost Nyaman maupun Kontrakan Macan Putih berjarak sangat dekat, hanya sekitar 5–7 menit ke kampus UNSRI Bukit Besar.',
-  },
-  {
-    q: 'Apakah bisa sewa bulanan atau harus kontrak tahunan?',
-    a: 'Untuk kost, pembayaran dilakukan per bulan. Untuk kontrakan, kami menerima kontrak tahunan. Bisa juga dinegosiasikan langsung dengan pemilik.',
-  },
-];
 
 export default function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(null);
@@ -46,7 +20,15 @@ export default function FaqAccordion() {
             Pertanyaan<br />yang Sering Ditanyakan
           </h2>
           <p className="body-lg faq-section__sub">
-            Belum menemukan jawaban? Hubungi kami langsung via WhatsApp.
+            Belum menemukan jawaban?{' '}
+            <a
+              href={waLink('Halo, saya punya pertanyaan tentang Kos Nyaman.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="faq-section__link"
+            >
+              Hubungi kami langsung via WhatsApp.
+            </a>
           </p>
         </div>
 
@@ -60,20 +42,22 @@ export default function FaqAccordion() {
                 className={`faq-item ${isOpen ? 'faq-item--open' : ''}`}
               >
                 <button
+                  id={`faq-question-${i}`}
                   className="faq-item__trigger"
                   onClick={() => toggle(i)}
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${i}`}
                 >
                   <span className="faq-item__question">{item.q}</span>
-                  <span className="faq-item__icon">{isOpen ? '−' : '+'}</span>
+                  <span className="faq-item__icon" aria-hidden="true">{isOpen ? '−' : '+'}</span>
                 </button>
                 <div
                   id={`faq-answer-${i}`}
                   className="faq-item__answer-wrap"
                   role="region"
+                  aria-labelledby={`faq-question-${i}`}
                   style={{
-                    maxHeight: isOpen ? '300px' : '0',
+                    maxHeight: isOpen ? '480px' : '0',
                     opacity: isOpen ? 1 : 0,
                   }}
                 >

@@ -2,32 +2,34 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fdfbf7" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- SEO -->
-    <meta name="description" content="Kos Nyaman Bukit Baru — Hunian nyaman di Palembang. Kost harian dengan AC, WiFi, kamar mandi dalam, dan rumah kontrakan luas 5 kamar. Lokasi strategis, booking langsung ke pemilik." />
-    <meta name="keywords" content="kost palembang, kost bukit baru, kontrakan palembang, sewa rumah palembang, kost AC wifi, kontrakan macan putih" />
-    <meta name="robots" content="index, follow" />
+    <!--
+      Per-page SEO tags. At build time scripts/prerender.mjs replaces this whole
+      block with the title, description, canonical URL, Open Graph tags and
+      structured data for each page (see src/seo.ts). These defaults are only
+      used by `npm run dev`.
+    -->
+    <!--seo-->
+    <title>Kos Nyaman Bukit Baru — Kost & Kontrakan di Palembang</title>
+    <meta name="description" content="Kost AC dengan kamar mandi dalam & WiFi di Bukit Baru, Palembang, dekat UNSRI Bukit Besar. Booking langsung ke pemilik via WhatsApp." />
+    <!--/seo-->
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Kos Nyaman Bukit Baru — Hunian Nyaman di Palembang" />
-    <meta property="og:description" content="Kost siap huni & rumah kontrakan luas di Palembang. Fasilitas lengkap, lokasi strategis, booking langsung ke pemilik." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/kos-nyaman/8.webp" />
-
-    <!-- Performance hints & preloading -->
+    <!-- Performance hints -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" href="/images/kos-nyaman/8.webp" as="image" fetchpriority="high" />
     <!-- Async Google Fonts: preload as style, swap on load to avoid render-blocking -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap&subset=latin" as="style" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap&subset=latin" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" /></noscript>
-    <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
-
-    <title>Kos Nyaman Bukit Baru — Hunian Nyaman di Palembang</title>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" />
+      <!-- Without JavaScript, show content that normally fades in on scroll -->
+      <style>.reveal, .hero__stat { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
   </head>
   <body>
     <!-- Fixed noise grain overlay (GPU-safe: fixed + pointer-events-none) -->

@@ -28,7 +28,19 @@ export interface Property {
   mapsUrl: string;
   coords: [number, number];
   badge?: string;
+  /** 1200×630 JPG used for WhatsApp/Facebook link previews (falls back to heroImage). */
+  ogImage?: string;
+  /** Optional facts used in structured data (Google / AI search). */
+  bedrooms?: number;
+  bathrooms?: number;
+  floorSizeM2?: number;
+  landSizeM2?: number;
+  /** Other pages about this exact listing (e.g. Mamikos). */
+  sameAs?: string[];
 }
+
+/** URL path of a property detail page. */
+export const propertyPath = (p: Pick<Property, 'id'>) => `/properti/${p.id}`;
 
 export const properties: Property[] = [
   {
@@ -83,6 +95,10 @@ export const properties: Property[] = [
     mapsUrl: 'https://maps.app.goo.gl/7WT1v7Fidvf7xHrb9',
     coords: [-2.9836, 104.7349],
     badge: 'Tersedia',
+    ogImage: '/og/kos-nyaman-bukit-baru.jpg',
+    sameAs: [
+      'https://mamikos.com/room/kost-kota-palembang-kost-campur-eksklusif-kost-nyaman-2-tipe-a-ilir-barat-i-palembang-2',
+    ],
   },
   {
     id: 'kos-nyaman-tipe-b',
@@ -135,6 +151,7 @@ export const properties: Property[] = [
     mapsUrl: 'https://maps.app.goo.gl/7WT1v7Fidvf7xHrb9',
     coords: [-2.9836, 104.7349],
     badge: 'Sudah Tersewa',
+    ogImage: '/og/kos-nyaman-tipe-b.jpg',
   },
   {
     id: 'kontrakan-macan-putih',
@@ -191,5 +208,10 @@ export const properties: Property[] = [
     mapsUrl: 'https://share.google/yiFTIDSfcfwLxVrNU',
     coords: [-2.9641, 104.7456],
     badge: 'Sudah Disewa',
+    ogImage: '/og/kontrakan-macan-putih.jpg',
+    bedrooms: 5,
+    bathrooms: 3,
+    floorSizeM2: 208,
+    landSizeM2: 276,
   },
 ];

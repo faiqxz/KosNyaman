@@ -1,4 +1,4 @@
-import { useEffect, useRef, lazy, Suspense } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,10 +13,11 @@ import {
 } from '@phosphor-icons/react';
 import { useReveal } from '../hooks/useReveal';
 import PropertyCard from '../components/PropertyCard';
-
-const InteractiveMap = lazy(() => import('../components/InteractiveMap'));
-const FaqAccordion = lazy(() => import('../components/FaqAccordion'));
-import { properties } from '../data/properties';
+import LocationMap from '../components/LocationMap';
+import FaqAccordion from '../components/FaqAccordion';
+import { properties, propertyPath } from '../data/properties';
+import { BUSINESS, shortPrice, waLink } from '../data/site';
+import { homeMeta, startingKostPrice, useSeo } from '../seo';
 import './Home.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -102,14 +103,12 @@ export default function Home() {
     return () => ctx.revert();
   }, []);
 
-  /* Page title ────────────────────────────────────────────────────────────── */
-  useEffect(() => {
-    document.title = 'Kos Nyaman Bukit Baru — Hunian Nyaman di Palembang';
-  }, []);
+  /* Page <title>, meta tags & structured data ─────────────────────────────── */
+  const meta = useMemo(() => homeMeta(), []);
+  useSeo(meta);
 
-  const waLink = `https://wa.me/6287899677415?text=${encodeURIComponent(
-    'Halo, saya tertarik dengan properti Kos Nyaman Bukit Baru. Apakah masih tersedia?'
-  )}`;
+  const bookingLink = waLink('Halo, saya tertarik dengan properti Kos Nyaman Bukit Baru. Apakah masih tersedia?');
+  const hasAvailableKost = properties.some((p) => p.type === 'kost' && p.status !== 'rented');
 
   return (
     <main className="home overflow-x-hidden">
@@ -119,7 +118,7 @@ export default function Home() {
         <div ref={heroBgRef} className="hero__bg">
           <img
             src="/images/kos-nyaman/8.webp"
-            alt="Kos Nyaman Bukit Baru — tampak luar"
+            alt="Bangunan Kost Nyaman 2 di Bukit Baru, Palembang"
             className="hero__bg-img"
             fetchPriority="high"
             width={1200}
@@ -150,8 +149,8 @@ export default function Home() {
           {/* ── BOTTOM RIGHT: Description + CTA + Trust ── */}
           <div className="hero__bottom-right">
             <p className="hero__sub">
-              Kost siap huni dengan suasana asri dan rumah kontrakan luas — fasilitas lengkap,
-              lokasi strategis, booking langsung ke pemilik tanpa perantara.
+              Kost siap huni dengan suasana asri dan rumah kontrakan luas di Palembang — fasilitas lengkap,
+              dekat UNSRI Bukit Besar, booking langsung ke pemilik tanpa perantara.
             </p>
 
             {/* CTAs */}
@@ -160,7 +159,7 @@ export default function Home() {
                 Lihat Properti
                 <span className="hero__btn-icon"><ArrowRight size={15} weight="bold" /></span>
               </a>
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
+              <a href={bookingLink} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
                 <WhatsappLogo size={16} weight="fill" /> Booking Sekarang
               </a>
             </div>
@@ -172,10 +171,12 @@ export default function Home() {
                   <CheckCircle size={13} weight="fill" /> {t}
                 </li>
               ))}
-              <li className="hero__trust-item hero__trust-item--available">
-                <span className="hero__avail-dot" />
-                Kamar masih tersedia
-              </li>
+              {hasAvailableKost && (
+                <li className="hero__trust-item hero__trust-item--available">
+                  <span className="hero__avail-dot" />
+                  Kamar masih tersedia
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -185,7 +186,7 @@ export default function Home() {
           <div className="hero__stats-bar-inner container">
             {[
               { val: properties.filter(p => p.status !== 'rented').length.toString(), label: 'Properti Tersedia' },
-              { val: 'Rp1,3 Jt', label: 'Mulai dari /bulan' },
+              { val: shortPrice(startingKostPrice()).replace(' jt', ' Jt'), label: 'Mulai dari /bulan' },
               { val: '24/7', label: 'Keamanan & Akses' },
             ].map((s) => (
               <div key={s.label} className="hero__stat">
@@ -233,7 +234,7 @@ export default function Home() {
               {
                 icon: <MapPin size={20} weight="duotone" />,
                 title: 'Lokasi Strategis',
-                desc: 'Dekat universitas, sekolah, rumah sakit, pasar, bandara, dan pusat kota Palembang.',
+                desc: '5–7 menit ke UNSRI Bukit Besar, dekat RS Permata Palembang, pasar, sekolah, dan pusat kota Palembang.',
                 delay: 'reveal-delay-2',
               },
             ].map((item) => (
@@ -348,29 +349,26 @@ export default function Home() {
               Lokasi Mudah<br />Dijangkau
             </h2>
             <p className="body-lg" style={{ color: 'var(--text-secondary)' }}>
-              Kedua properti berada di lokasi strategis Palembang — dekat kampus, rumah sakit, dan pusat kota.
+              Kedua lokasi kami berada di Palembang — dekat kampus UNSRI Bukit Besar, rumah sakit, dan pusat kota.
+              Ketuk alamat untuk membuka rute di Google Maps.
             </p>
           </div>
 
           <div className="reveal reveal-delay-2">
-            <Suspense fallback={<div className="map-placeholder" style={{ height: '450px', background: 'var(--bg-surface)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>Memuat peta...</div>}>
-              <InteractiveMap />
-            </Suspense>
+            <LocationMap />
           </div>
         </div>
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────────────────────── */}
-      <Suspense fallback={null}>
-        <FaqAccordion />
-      </Suspense>
+      <FaqAccordion />
 
       {/* ── BOOKING CTA ─────────────────────────────────────────────────────── */}
       <section className="cta-section" id="booking">
         <div className="cta-section__bg">
           <img
             src="/images/macan-putih/12.webp"
-            alt="Kontrakan Macan Putih"
+            alt=""
             className="cta-section__bg-img"
             loading="lazy"
             decoding="async"
@@ -394,7 +392,7 @@ export default function Home() {
 
           <div className="reveal reveal-delay-2 cta-section__actions">
             <a
-              href={waLink}
+              href={bookingLink}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-primary cta-section__wa-btn"
@@ -402,15 +400,17 @@ export default function Home() {
               <WhatsappLogo size={20} weight="fill" />
               Booking via WhatsApp
             </a>
-            <p className="cta-section__note">Nomor: <strong>0878 9967 7415</strong></p>
+            <p className="cta-section__note">
+              Atau telepon: <a href={`tel:${BUSINESS.phoneE164}`}><strong>{BUSINESS.phoneDisplay}</strong></a>
+            </p>
           </div>
 
           {/* Property quick-links */}
           <div className="reveal reveal-delay-3 cta-section__links">
             {properties.map((prop) => (
-              <Link key={prop.id} to={`/properti/${prop.id}`} className="cta-prop-link glass-dark">
+              <Link key={prop.id} to={propertyPath(prop)} className="cta-prop-link glass-dark">
                 <div className="cta-prop-link__img">
-                  <img src={prop.heroImage} alt={prop.name} loading="lazy" />
+                  <img src={prop.heroImage} alt="" loading="lazy" decoding="async" width={48} height={48} />
                 </div>
                 <div className="cta-prop-link__info">
                   <p className="cta-prop-link__name">{prop.name}</p>

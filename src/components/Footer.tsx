@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, WhatsappLogo, ArrowRight, Envelope } from '@phosphor-icons/react';
-import { properties } from '../data/properties';
+import { properties, propertyPath } from '../data/properties';
+import { BUSINESS, waLink } from '../data/site';
 import Logo from '../assets/logo.webp';
 import './Footer.css';
 
@@ -15,7 +16,7 @@ export default function Footer() {
         <div className="footer__col footer__brand-col">
           <div className="footer__brand">
             <div className="footer__logo" style={{ background: 'transparent' }}>
-              <img src={Logo} alt="Kos Nyaman Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <img src={Logo} alt="" width={44} height={32} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <div>
               <p className="footer__brand-name">Kos Nyaman Bukit Baru</p>
@@ -23,7 +24,8 @@ export default function Footer() {
             </div>
           </div>
           <p className="footer__brand-desc">
-            Kost dan kontrakan berkualitas di Palembang. Fasilitas lengkap, lokasi strategis, booking langsung ke pemilik.
+            Kost AC dengan kamar mandi dalam dan rumah kontrakan di Palembang, dekat UNSRI Bukit Besar.
+            Fasilitas lengkap, booking langsung ke pemilik.
           </p>
         </div>
 
@@ -33,14 +35,14 @@ export default function Footer() {
           <ul className="footer__links">
             {properties.map((prop) => (
               <li key={prop.id}>
-                <Link to={`/properti/${prop.id}`} className="footer__link">
+                <Link to={propertyPath(prop)} className="footer__link">
                   <ArrowRight size={11} weight="bold" />
                   {prop.name}
                 </Link>
               </li>
             ))}
             <li>
-              <a href="#properti" className="footer__link">
+              <a href="/#properti" className="footer__link">
                 <ArrowRight size={11} weight="bold" />
                 Semua Properti
               </a>
@@ -51,23 +53,30 @@ export default function Footer() {
         {/* Column 3 – Contact */}
         <div className="footer__col">
           <h3 className="footer__col-title">Hubungi Kami</h3>
+          <address className="footer__address">
           <ul className="footer__links">
             <li>
               <a
                 className="footer__link"
-                href="https://wa.me/6287899677415"
+                href={waLink()}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`WhatsApp ${BUSINESS.phoneDisplay}`}
               >
                 <WhatsappLogo size={14} weight="fill" />
-                0878 9967 7415
+                {BUSINESS.phoneDisplay}
               </a>
             </li>
             <li>
-              <span className="footer__link">
+              <a
+                className="footer__link"
+                href={BUSINESS.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <MapPin size={14} weight="fill" />
-                Jln Bukit Baru, Lorong Bukit Jaya, Palembang
-              </span>
+                Jln Bukit Baru, Lorong Bukit Jaya, Kec. {BUSINESS.address.district}, {BUSINESS.address.city}
+              </a>
             </li>
             <li>
               <span className="footer__link">
@@ -76,10 +85,11 @@ export default function Footer() {
               </span>
             </li>
           </ul>
+          </address>
 
           {/* CTA nudge */}
           <a
-            href="https://wa.me/6287899677415?text=Halo%2C%20saya%20ingin%20bertanya%20tentang%20properti%20Kos%20Nyaman."
+            href={waLink('Halo, saya ingin bertanya tentang properti Kos Nyaman.')}
             target="_blank"
             rel="noopener noreferrer"
             className="footer__cta-nudge"
@@ -92,7 +102,7 @@ export default function Footer() {
 
       <div className="footer__bottom">
         <div className="container">
-          <p>© {new Date().getFullYear()} Kos Nyaman Bukit Baru. Seluruh hak cipta dilindungi.</p>
+          <p suppressHydrationWarning>© {new Date().getFullYear()} {BUSINESS.name}. Seluruh hak cipta dilindungi.</p>
         </div>
       </div>
     </footer>

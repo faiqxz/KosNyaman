@@ -78,7 +78,7 @@
 }
 
 /* On dark hero – invert brand text */
-.navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__brand-name { color: var(--text-on-dark); }
+.navbar:not(.navbar--scrolled):not(.navbar--light):not(.navbar--menu-open) .navbar__brand-name { color: var(--text-on-dark); }
 
 /* ── LINKS (left side) ── */
 .navbar__links {
@@ -119,8 +119,8 @@
 }
 
 /* On dark hero */
-.navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__link { color: rgba(240, 236, 228, 0.70); }
-.navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__link:hover {
+.navbar:not(.navbar--scrolled):not(.navbar--light):not(.navbar--menu-open) .navbar__link { color: rgba(240, 236, 228, 0.70); }
+.navbar:not(.navbar--scrolled):not(.navbar--light):not(.navbar--menu-open) .navbar__link:hover {
   color: var(--text-on-dark);
   background: rgba(255,255,255,0.07);
 }
@@ -141,24 +141,28 @@
 /* ── HAMBURGER ── */
 .navbar__hamburger {
   display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   background: none;
   border: none;
   color: var(--text-primary);
-  padding: 0.35rem;
-  border-radius: 6px;
+  padding: 0;
+  border-radius: 10px;
   transition: background 0.2s ease;
-  margin-left: auto;
+  margin-left: 0.25rem;
 }
 .navbar__hamburger:hover { background: rgba(26,22,18,0.06); }
 
-.navbar:not(.navbar--scrolled):not(.navbar--light) .navbar__hamburger { color: var(--text-on-dark); }
+.navbar:not(.navbar--scrolled):not(.navbar--light):not(.navbar--menu-open) .navbar__hamburger { color: var(--text-on-dark); }
 
 /* ── MOBILE MENU (Full-screen overlay) ── */
 .mobile-menu {
   position: fixed;
   inset: 0;
   z-index: 70;
-  background: rgba(253, 251, 247, 0.97);
+  background: rgba(253, 251, 247, 0.99);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   display: flex;
@@ -186,7 +190,7 @@
 }
 
 .mobile-menu__link {
-  font-size: clamp(1.4rem, 5vw, 1.75rem);
+  font-size: clamp(1.25rem, 5vw, 1.6rem);
   font-weight: 700;
   color: var(--text-primary);
   text-align: center;
@@ -231,12 +235,29 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .navbar__links { display: none; }
-  .navbar__right { display: none; }
+  .navbar__right { margin-left: auto; }
   .navbar__hamburger { display: flex; }
   .navbar__brand {
     position: static;
     transform: none;
   }
+  /* Icon-only WhatsApp button so contact is always one tap away */
+  .navbar__cta {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 12px;
+  }
+  .navbar__cta-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .navbar--menu-open .navbar__right { visibility: hidden; }
 }
 
 @media (max-width: 480px) {

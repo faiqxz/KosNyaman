@@ -97,6 +97,11 @@
   color: var(--text-on-dark-2);
   max-width: 30ch;
 }
+.faq-section__link {
+  color: var(--accent-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 /* ── Accordion ── */
 .faq-section__right {

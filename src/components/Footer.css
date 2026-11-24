@@ -146,7 +146,13 @@
   text-align: center;
 }
 
+.footer__address { font-style: normal; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .footer__grid { gap: 2rem; }
+  /* Comfortable 44px tap targets on phones */
+  .footer__links { gap: 0; }
+  .footer__link { min-height: 44px; padding-block: 0.6rem; }
+  .footer__cta-nudge { min-height: 48px; }
 }
