@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight, WifiHigh, Wind, Bathtub, Bed, Fire } from '@phosphor-icons/react';
-import { type Property } from '../data/properties';
+import { type Property, propertyPath } from '../data/properties';
 import './PropertyCard.css';
 
 interface PropertyCardProps {
@@ -99,7 +99,7 @@ export default function PropertyCard({ property, index = 0 }: PropertyCardProps)
               </div>
             </div>
           </div>
-          <Link to={`/properti/${property.id}`} className="prop-card__cta btn btn-primary">
+          <Link to={propertyPath(property)} className="prop-card__cta btn btn-primary" aria-label={`Lihat detail ${property.name}`}>
             Lihat Detail <ArrowRight size={14} weight="bold" />
           </Link>
         </div>

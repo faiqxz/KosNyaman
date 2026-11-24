@@ -45,6 +45,7 @@
 .imap__legend-info { flex: 1; min-width: 0; }
 
 .imap__legend-name {
+  display: block;
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-primary);
@@ -54,20 +55,43 @@
 }
 
 .imap__legend-addr {
+  display: block;
   font-size: 0.72rem;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   margin-top: 0.1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.45;
 }
 
-.imap__legend-icon {
-  color: var(--text-tertiary);
-  flex-shrink: 0;
-  transition: color 0.2s ease;
+.imap__legend-units {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
 }
-.imap__legend-item:hover .imap__legend-icon { color: var(--accent); }
+
+.imap__legend-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+.imap__legend-item:hover .imap__legend-cta { background: var(--accent-dim); }
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
 
 /* Canvas */
 .imap__canvas {
@@ -178,6 +202,30 @@
   color: var(--text-tertiary);
   margin-left: 0.2rem;
 }
+
+.map-popup__units {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.map-popup__unit {
+  display: flex;
+  flex-direction: column;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.map-popup__unit:hover { border-color: var(--accent-border); }
+.map-popup__unit-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.map-popup__unit-name em { font-style: normal; font-weight: 500; color: #b91c1c; }
+.map-popup__unit .map-popup__price { font-size: 0.82rem; margin-bottom: 0; }
 
 .map-popup__actions {
   display: flex;

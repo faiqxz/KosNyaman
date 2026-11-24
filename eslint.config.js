@@ -19,4 +19,9 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // Build-time prerender entry: never hot-reloaded, exports helpers on purpose
+    files: ['src/entry-server.tsx'],
+    rules: { 'react-refresh/only-export-components': 'off' },
+  },
 ])

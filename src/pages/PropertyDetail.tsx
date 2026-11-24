@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -20,9 +20,12 @@ import {
   Tree,
   Lightning,
 } from '@phosphor-icons/react';
-import { properties } from '../data/properties';
-
-const InteractiveMap = lazy(() => import('../components/InteractiveMap'));
+import { properties, propertyPath, type Property } from '../data/properties';
+import { imageAlt } from '../data/imageAlts';
+import { waLink } from '../data/site';
+import { propertyMeta, useSeo } from '../seo';
+import LocationMap from '../components/LocationMap';
+import NotFound from './NotFound';
 import { useReveal } from '../hooks/useReveal';
 import './PropertyDetail.css';
 
@@ -47,14 +50,22 @@ export default function PropertyDetail() {
   const { id } = useParams<{ id: string }>();
   const property = properties.find((p) => p.id === id);
 
+  if (!property) return <NotFound />;
+  // `key` resets gallery/lightbox state when switching between properties
+  return <PropertyDetailView key={property.id} property={property} />;
+}
+
+function PropertyDetailView({ property }: { property: Property }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const touchStartX = useRef<number | null>(null);
 
   useReveal();
 
-  // Redirect if not found
-  if (!property) return <Navigate to="/" replace />;
+  const meta = useMemo(() => propertyMeta(property), [property]);
+  useSeo(meta);
 
   /* GSAP hero parallax ───────────────────────────────────────────────────── */
   useEffect(() => {
@@ -96,10 +107,6 @@ export default function PropertyDetail() {
     return () => ctx.revert();
   }, [property.id]);
 
-  useEffect(() => {
-    document.title = `${property.name} — Kos Nyaman Bukit Baru`;
-  }, [property]);
-
   // Lightbox keyboard nav
   useEffect(() => {
     if (lightbox === null) return;
@@ -113,10 +120,30 @@ export default function PropertyDetail() {
     return () => { window.removeEventListener('keydown', handler); document.body.style.overflow = ''; };
   }, [lightbox, property.gallery.length]);
 
-  const waMessage = encodeURIComponent(
-    `Halo, saya tertarik dengan ${property.name}. Apakah masih tersedia? Boleh saya survei?`
+  // Move focus into the photo viewer when it opens (keyboard / screen readers)
+  const lightboxOpen = lightbox !== null;
+  useEffect(() => {
+    if (lightboxOpen) lightboxCloseRef.current?.focus();
+  }, [lightboxOpen]);
+
+  const isRented = property.status === 'rented';
+  const bookingLink = waLink(
+    isRented
+      ? `Halo, saya tertarik dengan ${property.name} yang sedang tersewa. Boleh saya masuk daftar tunggu, atau ada unit lain yang tersedia?`
+      : `Halo, saya tertarik dengan ${property.name}. Apakah masih tersedia? Boleh saya survei?`
   );
-  const waLink = `https://wa.me/6287899677415?text=${waMessage}`;
+  const alternatives = properties.filter((p) => p.id !== property.id && p.status !== 'rented');
+
+  const showPrev = () => setLightbox((i) => i !== null ? (i - 1 + property.gallery.length) % property.gallery.length : null);
+  const showNext = () => setLightbox((i) => i !== null ? (i + 1) % property.gallery.length : null);
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) showNext(); else showPrev();
+  };
 
   const privateFacilities = property.facilities.filter((f) => f.type === 'private');
   const sharedFacilities  = property.facilities.filter((f) => f.type === 'shared');
@@ -129,7 +156,7 @@ export default function PropertyDetail() {
           <div ref={heroBgRef} className="detail-hero__bg">
             <img
               src={property.heroImage}
-              alt={property.name}
+              alt={imageAlt(property.heroImage, property.name, 0)}
               className="detail-hero__img"
               fetchPriority="high"
               width={1200}
@@ -186,9 +213,9 @@ export default function PropertyDetail() {
                   key={img}
                   className={`gallery-item gallery-item--${i === 0 ? 'hero' : 'std'}`}
                   onClick={() => setLightbox(i)}
-                  aria-label={`Buka foto ${i + 1}`}
+                  aria-label={`Perbesar foto ${i + 1} dari ${property.gallery.length}`}
                 >
-                  <img src={img} alt={`${property.name} foto ${i + 1}`} loading="lazy" decoding="async" width={800} height={600} />
+                  <img src={img} alt={imageAlt(img, property.name, i)} loading="lazy" decoding="async" width={800} height={600} />
                   <div className="gallery-item__overlay">
                     <span>Perbesar</span>
                   </div>
@@ -269,27 +296,34 @@ export default function PropertyDetail() {
               {/* Inline CTA card */}
               <div className="detail-inline-cta">
                 <p className="detail-inline-cta__title">
-                  {property.status === 'rented' ? 'Sudah Disewa' : 'Tertarik?'}
+                  {isRented ? 'Sedang Tersewa' : 'Tertarik?'}
                 </p>
                 <p className="detail-inline-cta__desc">
-                  {property.status === 'rented' 
-                    ? 'Properti ini sudah penuh disewa. Hubungi kami untuk masuk daftar tunggu.' 
+                  {isRented
+                    ? 'Properti ini sedang tersewa. Hubungi kami untuk masuk daftar tunggu — kami kabari saat unit kosong.'
                     : 'Booking sekarang via WhatsApp langsung ke pemilik. Tanpa perantara.'}
                 </p>
-                {property.status === 'rented' ? (
-                  <button className="btn btn-disabled detail-inline-cta__btn" disabled>
-                    Sudah Disewa (Fully Booked)
-                  </button>
-                ) : (
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary detail-inline-cta__btn"
-                  >
-                    <WhatsappLogo size={16} weight="fill" />
-                    Booking via WhatsApp
-                  </a>
+                <a
+                  href={bookingLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn ${isRented ? 'btn-outline' : 'btn-primary'} detail-inline-cta__btn`}
+                >
+                  <WhatsappLogo size={16} weight="fill" />
+                  {isRented ? 'Daftar Tunggu via WhatsApp' : 'Booking via WhatsApp'}
+                </a>
+
+                {isRented && alternatives.length > 0 && (
+                  <div className="detail-alt">
+                    <p className="detail-alt__title">Masih tersedia:</p>
+                    {alternatives.map((alt) => (
+                      <Link key={alt.id} to={propertyPath(alt)} className="detail-alt__link">
+                        <span>{alt.name}</span>
+                        <span className="detail-alt__price">{alt.priceLabel}{alt.pricePeriod}</span>
+                        <ArrowRight size={14} weight="bold" />
+                      </Link>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
@@ -304,9 +338,7 @@ export default function PropertyDetail() {
               Peta Lokasi
             </h2>
             <div className="reveal reveal-delay-2">
-              <Suspense fallback={<div className="map-placeholder" style={{ height: '450px', background: 'var(--bg-surface)', borderRadius: 'var(--r-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>Memuat peta...</div>}>
-                <InteractiveMap />
-              </Suspense>
+              <LocationMap />
             </div>
           </div>
         </section>
@@ -337,34 +369,35 @@ export default function PropertyDetail() {
             >
               <MapPin size={15} weight="fill" /> Lihat di Maps
             </a>
-            {property.status === 'rented' ? (
-              <button className="btn btn-disabled sticky-cta__wa-btn" disabled>
-                Sudah Disewa (Fully Booked)
-              </button>
-            ) : (
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary sticky-cta__wa-btn"
-              >
-                <WhatsappLogo size={16} weight="fill" /> Booking via WhatsApp
-              </a>
-            )}
+            <a
+              href={bookingLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn ${isRented ? 'btn-outline sticky-cta__wa-btn--waitlist' : 'btn-primary'} sticky-cta__wa-btn`}
+            >
+              <WhatsappLogo size={16} weight="fill" /> {isRented ? 'Daftar Tunggu' : 'Booking via WhatsApp'}
+            </a>
           </div>
         </div>
       </div>
 
       {/* ── LIGHTBOX ─────────────────────────────────────────────────────── */}
       {lightbox !== null && (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Galeri foto">
-          <button className="lightbox__close" onClick={() => setLightbox(null)} aria-label="Tutup galeri">
+        <div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Galeri foto"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <button ref={lightboxCloseRef} className="lightbox__close" onClick={() => setLightbox(null)} aria-label="Tutup galeri">
             <X size={20} weight="bold" />
           </button>
 
           <button
             className="lightbox__nav lightbox__nav--prev"
-            onClick={() => setLightbox((i) => i !== null ? (i - 1 + property.gallery.length) % property.gallery.length : null)}
+            onClick={showPrev}
             aria-label="Foto sebelumnya"
           >
             <ArrowLeft size={18} weight="bold" />
@@ -373,7 +406,7 @@ export default function PropertyDetail() {
           <div className="lightbox__img-wrap" onClick={() => setLightbox(null)}>
             <img
               src={property.gallery[lightbox]}
-              alt={`${property.name} foto ${lightbox + 1}`}
+              alt={imageAlt(property.gallery[lightbox], property.name, lightbox)}
               className="lightbox__img"
               onClick={(e) => e.stopPropagation()}
             />
@@ -381,13 +414,13 @@ export default function PropertyDetail() {
 
           <button
             className="lightbox__nav lightbox__nav--next"
-            onClick={() => setLightbox((i) => i !== null ? (i + 1) % property.gallery.length : null)}
+            onClick={showNext}
             aria-label="Foto selanjutnya"
           >
             <ArrowRight size={18} weight="bold" />
           </button>
 
-          <p className="lightbox__count">{lightbox + 1} / {property.gallery.length}</p>
+          <p className="lightbox__count" aria-live="polite">{lightbox + 1} / {property.gallery.length}</p>
         </div>
       )}
     </>

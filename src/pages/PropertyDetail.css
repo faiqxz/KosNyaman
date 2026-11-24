@@ -466,6 +466,47 @@
 .sticky-cta__maps-btn { font-size: 0.8rem; padding: 0.6rem 1rem; }
 .sticky-cta__wa-btn   { font-size: 0.85rem; }
 
+/* Waitlist variant for rented properties */
+.sticky-cta__wa-btn--waitlist {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--accent-border);
+}
+
+/* Alternatives shown when a property is rented */
+.detail-alt {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.detail-alt__title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.detail-alt__link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, transform 0.25s var(--ease-spring);
+}
+.detail-alt__link span:first-child { flex: 1; }
+.detail-alt__link:hover { border-color: var(--accent-border); transform: translateX(2px); }
+.detail-alt__price { font-size: 0.8rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+
 /* ── LIGHTBOX ── */
 .lightbox {
   position: fixed;

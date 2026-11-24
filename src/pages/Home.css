@@ -524,6 +524,13 @@
   color: rgba(240,236,228,0.55);
 }
 .cta-section__note strong { color: rgba(240,236,228,0.85); font-weight: 600; }
+.cta-section__note a {
+  display: inline-block;
+  padding-block: 0.6rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(240,236,228,0.35);
+}
 
 /* Property quick-link cards */
 .cta-section__links {
@@ -642,9 +649,16 @@
 @media (max-width: 480px) {
   .hero__actions { flex-direction: column; }
   .hero__actions .btn { width: 100%; justify-content: center; }
-  .hero__stats-bar-inner { flex-direction: column; align-items: center; }
-  .hero__stat + .hero__stat::before { display: none; }
-  .hero__trust { flex-direction: column; gap: 0.4rem; }
+  /* Keep the 3 stats on one row so the hero stays compact on phones */
+  .hero__stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-inline: 0.5rem;
+  }
+  .hero__stat { padding: 0.8rem 0.25rem; }
+  .hero__stat-val { font-size: 1.1rem; }
+  .hero__stat-label { font-size: 0.66rem; line-height: 1.3; }
+  .hero__trust { gap: 0.4rem; }
 }
 
 /* ── AVAILABILITY INDICATOR ────────────────────────────────────────────────── */
@@ -685,8 +699,12 @@
   gap: 1.25rem;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 769px) and (max-width: 900px) {
   .testimonials-grid { grid-template-columns: 1fr 1fr; }
+}
+/* Must come after the base rule above, otherwise phones get 3 tiny columns */
+@media (max-width: 768px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
 }
 
 /* Testimonial Card */
@@ -711,12 +729,14 @@
   border-color: var(--border-accent);
 }
 
-/* Center card slightly elevated */
-.testimonial-card:nth-child(2) {
-  transform: translateY(-8px);
-}
-.testimonial-card:nth-child(2):hover {
-  transform: translateY(-14px);
+/* Center card slightly elevated (desktop only) */
+@media (min-width: 901px) {
+  .testimonial-card:nth-child(2) {
+    transform: translateY(-8px);
+  }
+  .testimonial-card:nth-child(2):hover {
+    transform: translateY(-14px);
+  }
 }
 
 .testimonial-card__stars {
